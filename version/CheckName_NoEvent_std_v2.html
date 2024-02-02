@@ -121,7 +121,7 @@
             console.log(currentAccount);
             web3.contract.methods.registration($("#document1").val())
                 .send({from: currentAccount
-                , values: web3.utils.toWei("0.002", "ether")}
+                , value: web3.utils.toWei("0.002", "ether")}
                 , function(error, result){
                     $("#result").html(result);
                 });
