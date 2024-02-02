@@ -77,7 +77,7 @@
             ],
             "name": "registration",
             "outputs": [],
-            "stateMutability": "payable",
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -99,10 +99,10 @@
             "stateMutability": "view",
             "type": "function"
         }
-    ]; // version 2
+    ];
         
         async function loadContract() {
-            return await new web3.eth.Contract(abi, '0x1193A95c06474645D31E55a6619a6600f2c27c1b'); // version 2
+            return await new web3.eth.Contract(abi, '0x6cc16B7aa4F5c95647eFF0209906C173a0973018');
         }
 
         async function load() {
@@ -120,9 +120,7 @@
         $("#btnRegistration").click(function() {
             console.log(currentAccount);
             web3.contract.methods.registration($("#document1").val())
-                .send({from: currentAccount
-                , values: web3.utils.toWei("0.002", "ether")}
-                , function(error, result){
+                .send({from: currentAccount}, function(error, result){
                     $("#result").html(result);
                 });
         });
