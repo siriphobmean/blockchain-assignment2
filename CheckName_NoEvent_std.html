@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Name in Blockchain Class</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <!-- <script src="./node_modules/web3/dist/web3.min.js">
+    </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.3/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Name in Blockchain Class</h1>
+        <label class="col-lg-2 control-label">
+        Name Registration</label>
+        <input id="document1" type="text">
+        <button id="btnRegistration">Registration</button>
+                
+        <label class="col-lg-2 control-label">
+        Check Student Name</label>
+        <input id="document2" type="text">
+        <button id="btnCheck">Check</button> 
+               
+        <label class="col-lg-2 control-label">Status</label>
+        <h2 id="result"></h2>
+        Status: <span id="status">Loading...</span>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js">
+    </script>
+    <script>
+        
+        // ===Connecting to MetaMask===
+        function loadWeb3() {
+            if (window.ethereum) {
+                // To get web3(.js) object
+                
+                // ***std***
+                
+                // To request user's account from Metamask
+                // ***std***
+                ethereum
+                    .request({ method: 'xxx' })           
+                    .then()
+                    .catch((err) => {
+                        if (err.code === 4001) {
+                            // If this happens, the user rejected the connection request.
+                            console.log('Please connect to MetaMask.');
+                        } else {
+                            console.error(err);
+                        }
+                    });
+            }
+        }
+        
+        // ===Handle user accounts and accountsChanged===
+        let currentAccount = null;
+        
+        // Note that this event is emitted on page load.
+        // If the array of accounts is non-empty, you're already connected.
+        window.ethereum.on('accountsChanged', handleAccountsChanged);
+
+        // For now, 'eth_accounts' will continue to always return an array
+        function handleAccountsChanged(accounts) {
+            if (accounts.length === 0) {
+                // MetaMask is locked or the user has not connected any accounts
+                console.log('Please connect to MetaMask.');
+            } else if (accounts[0] !== currentAccount) {
+                
+                //***std***
+              
+            }
+        }
+
+        //***std***
+        let abi = ;
+        
+        //***std***
+        async function loadContract() {
+            return await new web3.eth.Contract(abi, 'xxx');
+        }
+
+        async function load() {
+            await loadWeb3();
+            web3.contract = await loadContract();
+            updateStatus('Ready!');
+        }
+        
+        function updateStatus(status) {
+            const statusEl = document.getElementById('status');
+            statusEl.innerHTML = status;
+            console.log(status);
+        }
+
+        $("#btnRegistration").click(function() {
+
+            //***std***
+            
+        });
+
+        $("#btnCheck").click(function() {
+            web3.contract.methods.checkName($("#document2").val()).call(function(error, result){
+                if(!error) {
+                    $("#result").html(result.toString());
+                } else
+                    console.error(error);
+            });     
+        });
+
+        load();
+    </script>
+</body>
+</html>
