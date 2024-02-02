@@ -33,13 +33,12 @@
             if (window.ethereum) {
                 // To get web3(.js) object
                 
-                // ***std***
+                web3 = new Web3(window.ethereum);
                 
                 // To request user's account from Metamask
-                // ***std***
                 ethereum
-                    .request({ method: 'xxx' })           
-                    .then()
+                    .request({ method: 'eth_requestAccounts' })           
+                    .then(handleAccountsChanged)
                     .catch((err) => {
                         if (err.code === 4001) {
                             // If this happens, the user rejected the connection request.
@@ -64,18 +63,47 @@
                 // MetaMask is locked or the user has not connected any accounts
                 console.log('Please connect to MetaMask.');
             } else if (accounts[0] !== currentAccount) {
-                
-                //***std***
-              
+                currentAccount = accounts[0];
             }
         }
 
-        //***std***
-        let abi = ;
+        let abi = [
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                }
+            ],
+            "name": "registration",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                }
+            ],
+            "name": "checkName",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];
         
-        //***std***
         async function loadContract() {
-            return await new web3.eth.Contract(abi, 'xxx');
+            return await new web3.eth.Contract(abi, '0x2C25b1b2207564C74c58e2df6feF4F6649d63025');
         }
 
         async function load() {
@@ -91,9 +119,13 @@
         }
 
         $("#btnRegistration").click(function() {
-
-            //***std***
-            
+            console.log(currentAccount);
+            web3.contract.methods.registration($("#document1").val())
+                .send({from: currentAccount
+                ,value: web3.utils.toWei("0.002","ether")}
+                , function(error, result){
+                    $("#result").html(result);
+                });
         });
 
         $("#btnCheck").click(function() {
