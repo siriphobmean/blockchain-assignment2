@@ -1,3 +1,0 @@
-Migrate version +1 point
-
-in lab: npm install -> delete version out
