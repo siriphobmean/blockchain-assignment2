@@ -120,89 +120,89 @@
             }
 
             let abi = [
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "text",
-                        "type": "string"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "bytes32",
-                        "name": "hash",
-                        "type": "bytes32"
-                    }
-                ],
-                "name": "NameAdded",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "text",
-                        "type": "string"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "reason",
-                        "type": "string"
-                    }
-                ],
-                "name": "RegistrationError",
-                "type": "event"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "string",
-                        "name": "name",
-                        "type": "string"
-                    }
-                ],
-                "name": "checkName",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "string",
-                        "name": "name",
-                        "type": "string"
-                    }
-                ],
-                "name": "registration",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-            }
-        ]; // version 3
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "text",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bytes32",
+                            "name": "hash",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "name": "NameAdded",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "text",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "reason",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "RegistrationError",
+                    "type": "event"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "checkName",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registration",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                }
+            ]; // version 3
 
             async function loadContract() {
                 return await new web3.eth.Contract(abi, '0xDA75cc24A80f500A9c97F4D04045A05A903595ef'); // version 3
@@ -242,6 +242,9 @@
             async function handleBuy(movie, price) {
                 console.log(currentAccount);
 
+                const currentTime = new Date();
+                const formattedTime = currentTime.toLocaleTimeString();
+
                 web3.contract.methods.registration(movie)
                     .send({
                         from: currentAccount,
@@ -253,6 +256,8 @@
                 web3.contract.once('NameAdded', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
+                        $("#titleMovie").html("Title: " + movie);
+                        $("#buyTime").html("Time: " + formattedTime);
                         $("#result").html("Name: " + event.returnValues.text + "<br/>=> Hashed as: " + event.returnValues.hash);
                     }
                 });
@@ -260,6 +265,8 @@
                 web3.contract.once('RegistrationError', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
+                        $("#titleMovie").html("Error");
+                        $("#buyTime").html("Error");
                         $("#result").html("Error: " + event.returnValues.text + "<br/>Reason: " + event.returnValues.reason);
                     }
                 });
