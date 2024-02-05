@@ -256,9 +256,9 @@
                 web3.contract.once('NameAdded', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
-                        $("#titleMovie").html("Title: " + movie);
-                        $("#buyTime").html("Time: " + formattedTime);
-                        $("#result").html("Name: " + event.returnValues.text + "<br/>=> Hashed as: " + event.returnValues.hash);
+                        $("#titleMovie").html(movie);
+                        $("#buyTime").html(formattedTime);
+                        $("#result").html(event.returnValues.hash);
                     }
                 });
 
