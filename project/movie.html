@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+
 <head>
     <title>Kamen Rider Movie Store</title>
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -70,12 +78,27 @@
             </div>
         </div>
 
-        <label class="col-lg-2 control-label">Owner (address)</label>
+        <div class="tableShow">
+            <table style="width:100%">
+                <tr>
+                    <th>Owner (address)</th>
+                    <th>Title</th>
+                    <th>Time</th>
+                </tr>
+                <tr>
+                    <td id="result"></td>
+                    <td id="titleMovie"></td>
+                    <td id="buyTime"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- <label class="col-lg-2 control-label">Owner (address)</label>
         <h2 id="result"></h2>
         <label class="col-lg-2 control-label">Title</label>
         <h2 id="titleMovie"></h2>
         <label class="col-lg-2 control-label">Time</label>
-        <h2 id="buyTime"></h2>
+        <h2 id="buyTime"></h2> -->
         Status: <span id="status">Loading...</span>
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js">
         </script>
