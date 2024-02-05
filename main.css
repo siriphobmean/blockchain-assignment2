@@ -2,6 +2,7 @@ body {
     background-color:#F0F0F0;
     padding: 2em;
     font-family: 'Raleway','Source Sans Pro', 'Arial';
+    color: white;
 }
 .container {
     width: 95%;
@@ -26,19 +27,19 @@ button {
 
 #result {
     padding:1em;
-    background-color:#F0F0F0;
+    /* background-color:#F0F0F0; */
     margin: 1em 0;
 }
 
 #titleMovie {
     padding:1em;
-    background-color:#F0F0F0;
+    /* background-color:#F0F0F0; */
     margin: 1em 0;
 }
 
 #buyTime {
     padding:1em;
-    background-color:#F0F0F0;
+    /* background-color:#F0F0F0; */
     margin: 1em 0;
 }
 
@@ -68,4 +69,9 @@ button {
 
 .tableShow {
     padding: 2%;
+}
+
+.textMovie {
+    margin-bottom: 4%;
+    margin-top: -1%;
 }
