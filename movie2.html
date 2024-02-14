@@ -4,7 +4,7 @@
 <style>
     body {
         background-image: url('image/wall1.jpg');
-        background-size:cover;
+        background-size: cover;
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
@@ -97,13 +97,45 @@
                     <th>Title</th>
                     <th>Time</th>
                 </tr>
-                <tr style="height:12px">
-                    <td id="result"></td>
-                    <td id="titleMovie"></td>
-                    <td id="buyTime"></td>
+                <tr style="height:36px">
+                    <td id="result1"></td>
+                    <td id="titleMovie1"></td>
+                    <td id="buyTime1"></td>
+                </tr>
+                <tr style="height:36px">
+                    <td id="result2"></td>
+                    <td id="titleMovie2"></td>
+                    <td id="buyTime2"></td>
+                </tr>
+                <tr style="height:36px">
+                    <td id="result3"></td>
+                    <td id="titleMovie3"></td>
+                    <td id="buyTime3"></td>
+                </tr>
+                <tr style="height:36px">
+                    <td id="result4"></td>
+                    <td id="titleMovie4"></td>
+                    <td id="buyTime4"></td>
+                </tr>
+                <tr style="height:36px">
+                    <td id="result5"></td>
+                    <td id="titleMovie5"></td>
+                    <td id="buyTime5"></td>
+                </tr>
+                <tr style="height:36px">
+                    <td id="result6"></td>
+                    <td id="titleMovie6"></td>
+                    <td id="buyTime6"></td>
                 </tr>
             </table>
         </div>
+
+        <!-- <label class="col-lg-2 control-label">Owner (address)</label>
+        <h2 id="result"></h2>
+        <label class="col-lg-2 control-label">Title</label>
+        <h2 id="titleMovie"></h2>
+        <label class="col-lg-2 control-label">Time</label>
+        <h2 id="buyTime"></h2> -->
         Status: <span id="status">Loading...</span>
         <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js">
         </script>
@@ -174,6 +206,19 @@
                     "type": "event"
                 },
                 {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registration",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                },
+                {
                     "anonymous": false,
                     "inputs": [
                         {
@@ -216,24 +261,11 @@
                     ],
                     "stateMutability": "view",
                     "type": "function"
-                },
-                {
-                    "inputs": [
-                        {
-                            "internalType": "string",
-                            "name": "name",
-                            "type": "string"
-                        }
-                    ],
-                    "name": "registration",
-                    "outputs": [],
-                    "stateMutability": "payable",
-                    "type": "function"
                 }
-            ]; // version 3
+            ] // version 3
 
             async function loadContract() {
-                return await new web3.eth.Contract(abi, '0xDA75cc24A80f500A9c97F4D04045A05A903595ef'); // version 3
+                return await new web3.eth.Contract(abi, '0xbd8F60FBe0D981AF630070071186F1dE952ceC9F'); // version 3
             }
 
             async function load() {
@@ -249,23 +281,25 @@
             }
 
             $("#btnRegistrationZiO").click(function () {
-                handleBuy("Test000", "0.00001");
+                handleBuy("Kamen Rider Zi-O", "0.001");
             });
             $("#btnRegistrationZeroOne").click(function () {
-                handleBuy("Test001", "0.00001");
+                handleBuy("Kamen Rider Zero-One", "0.002");
             });
             $("#btnRegistrationSaber").click(function () {
-                handleBuy("Test002", "0.00001");
+                handleBuy("Kamen Rider Saber", "0.003");
             });
             $("#btnRegistrationRevice").click(function () {
-                handleBuy("Test003", "0.00001");
+                handleBuy("Kamen Rider Revice", "0.004");
             });
             $("#btnRegistrationGeats").click(function () {
-                handleBuy("Test004", "0.00001");
+                handleBuy("Kamen Rider Geats", "0.005");
             });
             $("#btnRegistrationGotchard").click(function () {
-                handleBuy("Test005", "0.00001");
+                handleBuy("Kamen Rider Gotchard", "0.006");
             });
+
+            let index = 0;
 
             async function handleBuy(movie, price) {
                 console.log(currentAccount);
@@ -278,26 +312,33 @@
                         from: currentAccount,
                         value: web3.utils.toWei(price, "ether")
                     }, function (error, result) {
-                        $("#result").html(result);
+                        if (error) {
+                            console.log('Transaction cancelled.');
+                        } else {
+                            $(`#result${index}`).html(result);
+                            isTransactionConfirmed = true;
+                        }
                     });
 
                 web3.contract.once('NameAdded', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
-                        $("#titleMovie").html(movie);
-                        $("#buyTime").html(formattedTime);
-                        $("#result").html(currentAccount);
+                        $(`#titleMovie${index}`).html(movie);
+                        $(`#buyTime${index}`).html(formattedTime);
+                        $(`#result${index}`).html(currentAccount);
                     }
                 });
 
                 web3.contract.once('RegistrationError', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
-                        $("#titleMovie").html("-");
-                        $("#buyTime").html("-");
-                        $("#result").html("Error: " + event.returnValues.text + "<br/>Reason: " + event.returnValues.reason);
+                        $(`#titleMovie${index}`).html("-");
+                        $(`#buyTime${index}`).html("-");
+                        $(`#result${index}`).html("Error: " + event.returnValues.text + "<br/>Reason: " + event.returnValues.reason);
                     }
                 });
+
+                index++;
             }
 
             load();
