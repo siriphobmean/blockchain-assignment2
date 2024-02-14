@@ -4,7 +4,7 @@
 <style>
     body {
         background-image: url('image/wall1.jpg');
-        background-size: cover;
+        background-size:cover;
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
@@ -97,35 +97,10 @@
                     <th>Title</th>
                     <th>Time</th>
                 </tr>
-                <tr style="height:36px">
-                    <td id="result1"></td>
-                    <td id="titleMovie1"></td>
-                    <td id="buyTime1"></td>
-                </tr>
-                <tr style="height:36px">
-                    <td id="result2"></td>
-                    <td id="titleMovie2"></td>
-                    <td id="buyTime2"></td>
-                </tr>
-                <tr style="height:36px">
-                    <td id="result3"></td>
-                    <td id="titleMovie3"></td>
-                    <td id="buyTime3"></td>
-                </tr>
-                <tr style="height:36px">
-                    <td id="result4"></td>
-                    <td id="titleMovie4"></td>
-                    <td id="buyTime4"></td>
-                </tr>
-                <tr style="height:36px">
-                    <td id="result5"></td>
-                    <td id="titleMovie5"></td>
-                    <td id="buyTime5"></td>
-                </tr>
-                <tr style="height:36px">
-                    <td id="result6"></td>
-                    <td id="titleMovie6"></td>
-                    <td id="buyTime6"></td>
+                <tr style="height:12px">
+                    <td id="result"></td>
+                    <td id="titleMovie"></td>
+                    <td id="buyTime"></td>
                 </tr>
             </table>
         </div>
@@ -206,19 +181,6 @@
                     "type": "event"
                 },
                 {
-                    "inputs": [
-                        {
-                            "internalType": "string",
-                            "name": "name",
-                            "type": "string"
-                        }
-                    ],
-                    "name": "registration",
-                    "outputs": [],
-                    "stateMutability": "payable",
-                    "type": "function"
-                },
-                {
                     "anonymous": false,
                     "inputs": [
                         {
@@ -261,11 +223,24 @@
                     ],
                     "stateMutability": "view",
                     "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registration",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
                 }
-            ] // version 3
+            ]; // version 3
 
             async function loadContract() {
-                return await new web3.eth.Contract(abi, '0xbd8F60FBe0D981AF630070071186F1dE952ceC9F'); // version 3
+                return await new web3.eth.Contract(abi, '0xDA75cc24A80f500A9c97F4D04045A05A903595ef'); // version 3
             }
 
             async function load() {
@@ -281,25 +256,23 @@
             }
 
             $("#btnRegistrationZiO").click(function () {
-                handleBuy("Kamen Rider Zi-O!", "0.001");
+                handleBuy("Zi-O", "0.001");
             });
             $("#btnRegistrationZeroOne").click(function () {
-                handleBuy("Kamen Rider Zero-One!", "0.002");
+                handleBuy("Zero-One", "0.002");
             });
             $("#btnRegistrationSaber").click(function () {
-                handleBuy("Kamen Rider Saber!", "0.003");
+                handleBuy("Saber", "0.003");
             });
             $("#btnRegistrationRevice").click(function () {
-                handleBuy("Kamen Rider Revice!", "0.004");
+                handleBuy("Revice", "0.004");
             });
             $("#btnRegistrationGeats").click(function () {
-                handleBuy("Kamen Rider Geats!", "0.005");
+                handleBuy("Geats", "0.005");
             });
             $("#btnRegistrationGotchard").click(function () {
-                handleBuy("Kamen Rider Gotchard!", "0.006");
+                handleBuy("Gotchard", "0.006");
             });
-
-            let index = 0;
 
             async function handleBuy(movie, price) {
                 console.log(currentAccount);
@@ -312,33 +285,26 @@
                         from: currentAccount,
                         value: web3.utils.toWei(price, "ether")
                     }, function (error, result) {
-                        if (error) {
-                            console.log('Transaction cancelled.');
-                        } else {
-                            $(`#result${index}`).html(result);
-                            isTransactionConfirmed = true;
-                        }
+                        $("#result").html(result);
                     });
 
                 web3.contract.once('NameAdded', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
-                        $(`#titleMovie${index}`).html(movie);
-                        $(`#buyTime${index}`).html(formattedTime);
-                        $(`#result${index}`).html(currentAccount);
+                        $("#titleMovie").html(movie);
+                        $("#buyTime").html(formattedTime);
+                        $("#result").html(event.returnValues.hash);
                     }
                 });
 
                 web3.contract.once('RegistrationError', {}, function (error, event) {
                     if (!error) {
                         console.log(event);
-                        $(`#titleMovie${index}`).html("-");
-                        $(`#buyTime${index}`).html("-");
-                        $(`#result${index}`).html("Error: " + event.returnValues.text + "<br/>Reason: " + event.returnValues.reason);
+                        $("#titleMovie").html("Error");
+                        $("#buyTime").html("Error");
+                        $("#result").html("Error: " + event.returnValues.text + "<br/>Reason: " + event.returnValues.reason);
                     }
                 });
-
-                index++;
             }
 
             load();
