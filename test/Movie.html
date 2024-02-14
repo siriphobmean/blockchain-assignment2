@@ -1,8 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+    body {
+        background-image: url('image/wall1.jpg');
+        background-size:cover;
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid rgb(255, 255, 255);
+        border-collapse: collapse;
+    }
+</style>
+
 <head>
-    <title>Movie Shop</title>
+    <title>Kamen Rider Movie Store</title>
     <link rel="stylesheet" type="text/css" href="main.css">
     <!-- <script src="./node_modules/web3/dist/web3.min.js">
     </script> -->
@@ -10,197 +27,288 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>กรุณาเลือกหนังที่ต้องการซื้อ</h1>
-        <!-- โดเรม่อน -->
-        <label class="col-lg-2 control-label">โดเรม่อน 0.001 Ether</label>
-        <button id="btnRegistration" onclick="buyMovie('โดเรม่อน', 0.001)">Buy</button>
+    <div class="container" style="text-align: center;">
+        <h1 style="font-size: 40px;">Kamen Rider Movie</h1>
+        <div class="textMovie">
+            <label>Choose the movie you want to buy.</label>
+        </div>
 
-        <!-- วันพีช -->
-        <label class="col-lg-2 control-label">วันพีช 0.002 Ether</label>
-        <button id="btnRegistration" onclick="buyMovie('วันพีช', 0.002)">Buy</button>
+        <div class="card-movie">
+            <div class="card-movie2">
+                <label class="col-lg-2 control-label">
+                    Kamen Rider Zi-O</label>
+                <img src="image/zio.jpg" alt="Kamen Rider Zi-O Image" style="width: 200px;">
+                <!-- <input id="document1" type="text"> -->
+                <label>Price: 0.001 Ether</label>
+                <button id="btnRegistrationZiO">Buy</button>
+            </div>
 
-        <!-- นารูโตะ -->
-        <label class="col-lg-2 control-label">นารูโตะ 0.003 Ether</label>
-        <button id="btnRegistration" onclick="buyMovie('นารูโตะ', 0.003)">Buy</button>
+            <div class="card-movie2">
+                <label class="col-lg-2 control-label">
+                    Kamen Rider Zero-One</label>
+                <img src="image/zeroone.jpg" alt="Kamen Rider Zero-One Image" style="width: 200px;">
+                <!-- <input id="document1" type="text"> -->
+                <label>Price: 0.002 Ether</label>
+                <button id="btnRegistrationZeroOne">Buy</button>
+            </div>
 
-        <!-- ชินจัง -->
-        <label class="col-lg-2 control-label">ชินจัง 0.004 Ether</label>
-        <button id="btnRegistration" onclick="buyMovie('ชินจัง', 0.004)">Buy</button>
+            <div class="card-movie2">
+                <label class="col-lg-2 control-label">
+                    Kamen Rider Saber</label>
+                <img src="image/saber.jpg" alt="Kamen Rider Saber Image" style="width: 200px;">
+                <!-- <input id="document1" type="text"> -->
+                <label>Price: 0.002 Ether</label>
+                <button id="btnRegistrationSaber">Buy</button>
+            </div>
 
-        <!-- กาฟิวส์ -->
-        <label class="col-lg-2 control-label">กาฟิวส์ 0.005 Ether</label>
-        <button id="btnRegistration" onclick="buyMovie('กาฟิวส์', 0.005)">Buy</button>
+            <div class="card-movie2">
+                <label class="col-lg-2 control-label">
+                    Kamen Rider Revice</label>
+                <img src="image/revice.jpg" alt="Kamen Rider Zi-O Image" style="width: 200px;">
+                <!-- <input id="document1" type="text"> -->
+                <label>Price: 0.004 Ether</label>
+                <button id="btnRegistrationRevice">Buy</button>
+            </div>
 
-        <label class="col-lg-2 control-label">Status</label>
+
+            <div class="card-movie2">
+                <label class="col-lg-2 control-label">
+                    Kamen Rider Geats</label>
+                <img src="image/geats.jpg" alt="Kamen Rider Zi-O Image" style="width: 200px;">
+                <!-- <input id="document1" type="text"> -->
+                <label>Price: 0.005 Ether</label>
+                <button id="btnRegistrationGeats">Buy</button>
+            </div>
+
+            <div class="card-movie2">
+                <label class="col-lg-2 control-label">
+                    Kamen Rider Gotchard</label>
+                <img src="image/gotchard.jpg" alt="Kamen Rider Zi-O Image" style="width: 200px;">
+                <!-- <input id="document1" type="text"> -->
+                <label>Price: 0.006 Ether</label>
+                <button id="btnRegistrationGotchard">Buy</button>
+            </div>
+        </div>
+
+        <div class="tableShow">
+            <table style="width:100%">
+                <tr style="height:50px">
+                    <th>Owner (address)</th>
+                    <th>Title</th>
+                    <th>Time</th>
+                </tr>
+                <tr style="height:12px">
+                    <td id="result"></td>
+                    <td id="titleMovie"></td>
+                    <td id="buyTime"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- <label class="col-lg-2 control-label">Owner (address)</label>
         <h2 id="result"></h2>
+        <label class="col-lg-2 control-label">Title</label>
+        <h2 id="titleMovie"></h2>
+        <label class="col-lg-2 control-label">Time</label>
+        <h2 id="buyTime"></h2> -->
         Status: <span id="status">Loading...</span>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js">
-    </script>
-    <script>
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js">
+        </script>
+        <script>
 
-        // ===Connecting to MetaMask===
-        function loadWeb3() {
-            if (window.ethereum) {
-                // To get web3(.js) object
-                web3 = new Web3(window.ethereum);
+            // ===Connecting to MetaMask===
+            function loadWeb3() {
+                if (window.ethereum) {
+                    // To get web3(.js) object
+                    web3 = new Web3(window.ethereum);
 
-                // To request user's account from Metamask
-                ethereum
-                    .request({ method: 'eth_requestAccounts' })
-                    .then(handleAccountsChanged)
-                    .catch((err) => {
-                        if (err.code === 4001) {
-                            // If this happens, the user rejected the connection request.
-                            console.log('Please connect to MetaMask.');
-                        } else {
-                            console.error(err);
+                    // To request user's account from Metamask
+                    ethereum
+                        .request({ method: 'eth_requestAccounts' })
+                        .then(handleAccountsChanged)
+                        .catch((err) => {
+                            if (err.code === 4001) {
+                                // If this happens, the user rejected the connection request.
+                                console.log('Please connect to MetaMask.');
+                            } else {
+                                console.error(err);
+                            }
+                        });
+                }
+            }
+
+            // ===Handle user accounts and accountsChanged===
+            let currentAccount = null;
+
+            // Note that this event is emitted on page load.
+            // If the array of accounts is non-empty, you're already connected.
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+
+            // For now, 'eth_accounts' will continue to always return an array
+            function handleAccountsChanged(accounts) {
+                if (accounts.length === 0) {
+                    // MetaMask is locked or the user has not connected any accounts
+                    console.log('Please connect to MetaMask.');
+                } else if (accounts[0] !== currentAccount) {
+                    currentAccount = accounts[0];
+                }
+            }
+
+            let abi = [
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "text",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "bytes32",
+                            "name": "hash",
+                            "type": "bytes32"
                         }
+                    ],
+                    "name": "NameAdded",
+                    "type": "event"
+                },
+                {
+                    "anonymous": false,
+                    "inputs": [
+                        {
+                            "indexed": false,
+                            "internalType": "address",
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "text",
+                            "type": "string"
+                        },
+                        {
+                            "indexed": false,
+                            "internalType": "string",
+                            "name": "reason",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "RegistrationError",
+                    "type": "event"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "checkName",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ],
+                    "stateMutability": "view",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "string",
+                            "name": "name",
+                            "type": "string"
+                        }
+                    ],
+                    "name": "registration",
+                    "outputs": [],
+                    "stateMutability": "payable",
+                    "type": "function"
+                }
+            ]; // version 3
+
+            async function loadContract() {
+                return await new web3.eth.Contract(abi, '0xDA75cc24A80f500A9c97F4D04045A05A903595ef'); // version 3
+            }
+
+            async function load() {
+                await loadWeb3();
+                web3.contract = await loadContract();
+                updateStatus('Ready!');
+            }
+
+            function updateStatus(status) {
+                const statusEl = document.getElementById('status');
+                statusEl.innerHTML = status;
+                console.log(status);
+            }
+
+            $("#btnRegistrationZiO").click(function () {
+                handleBuy("Zi-O", "0.001");
+            });
+            $("#btnRegistrationZeroOne").click(function () {
+                handleBuy("Zero-One", "0.002");
+            });
+            $("#btnRegistrationSaber").click(function () {
+                handleBuy("Saber", "0.003");
+            });
+            $("#btnRegistrationRevice").click(function () {
+                handleBuy("Revice", "0.004");
+            });
+            $("#btnRegistrationGeats").click(function () {
+                handleBuy("Geats", "0.005");
+            });
+            $("#btnRegistrationGotchard").click(function () {
+                handleBuy("Gotchard", "0.006");
+            });
+
+            async function handleBuy(movie, price) {
+                console.log(currentAccount);
+
+                const currentTime = new Date();
+                const formattedTime = currentTime.toLocaleTimeString();
+
+                web3.contract.methods.registration(movie)
+                    .send({
+                        from: currentAccount,
+                        value: web3.utils.toWei(price, "ether")
+                    }, function (error, result) {
+                        $("#result").html(result);
                     });
-            }
-        }
 
-        // ===Handle user accounts and accountsChanged===
-        let currentAccount = null;
-
-        // Note that this event is emitted on page load.
-        // If the array of accounts is non-empty, you're already connected.
-        window.ethereum.on('accountsChanged', handleAccountsChanged);
-
-        // For now, 'eth_accounts' will continue to always return an array
-        function handleAccountsChanged(accounts) {
-            if (accounts.length === 0) {
-                // MetaMask is locked or the user has not connected any accounts
-                console.log('Please connect to MetaMask.');
-            } else if (accounts[0] !== currentAccount) {
-                currentAccount = accounts[0];
-            }
-        }
-
-        let abi = [
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "text",
-                        "type": "string"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "bytes32",
-                        "name": "hash",
-                        "type": "bytes32"
-                    }
-                ],
-                "name": "NameAdded",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "internalType": "address",
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "text",
-                        "type": "string"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "string",
-                        "name": "reason",
-                        "type": "string"
-                    }
-                ],
-                "name": "RegistrationError",
-                "type": "event"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "string",
-                        "name": "name",
-                        "type": "string"
-                    }
-                ],
-                "name": "checkName",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "string",
-                        "name": "name",
-                        "type": "string"
-                    }
-                ],
-                "name": "registration",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-            }
-        ]; // version 3
-
-        async function loadContract() {
-            return await new web3.eth.Contract(abi, '0x947Aec3Ce48BF00CAd51AF9787fFBf252a035Ce4'); // version 3
-        }
-
-        async function load() {
-            await loadWeb3();
-            web3.contract = await loadContract();
-            updateStatus('Ready!');
-        }
-
-        function updateStatus(status) {
-            const statusEl = document.getElementById('status');
-            statusEl.innerHTML = status;
-            console.log(status);
-        }
-
-        function buyMovie(movie, price) {
-            console.log(currentAccount);
-            web3.contract.methods.registration(movie)
-                .send({
-                    from: currentAccount,
-                    value: web3.utils.toWei(price.toString(), "ether")
-                }, function (error, result) {
-                    if (error) {
-                        $("#result").html("Error: " + error.message);
+                web3.contract.once('NameAdded', {}, function (error, event) {
+                    if (!error) {
+                        console.log(event);
+                        $("#titleMovie").html(movie);
+                        $("#buyTime").html(formattedTime);
+                        $("#result").html(event.returnValues.hash);
                     }
                 });
-        
-            web3.contract.once('NameAdded', {}, function (error, event) {
-                if (!error) {
-                    console.log(event);
-                    $("#result").html("You have successfully purchased: " + event.returnValues.text);
-                }
-            });
-        }        
 
-        load();
-    </script>
+                web3.contract.once('RegistrationError', {}, function (error, event) {
+                    if (!error) {
+                        console.log(event);
+                        $("#titleMovie").html("Error");
+                        $("#buyTime").html("Error");
+                        $("#result").html("Error: " + event.returnValues.text + "<br/>Reason: " + event.returnValues.reason);
+                    }
+                });
+            }
+
+            load();
+        </script>
 </body>
 
 </html>
