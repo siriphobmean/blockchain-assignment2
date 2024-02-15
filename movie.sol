@@ -30,7 +30,7 @@ contract ProofOfStudent {
     if (listStudent[hashing(name)]) {
         //---fire the event---
         emit RegistrationError(msg.sender, name, 
-            "This Student was added previously");
+            "This Movie was buy previously");
 
         //---refund back to the sender---
         payable(msg.sender).transfer(msg.value);
@@ -41,15 +41,15 @@ contract ProofOfStudent {
     
     //---check if msg.value != 0.002 ether---
     // if (msg.value != 0.002 ether) {
-        //---fire the event---
-        // emit RegistrationError(msg.sender, name, 
-            // "Incorrect amount of Ether. 0.002 ether for registration");
+    //     //---fire the event---
+    //     emit RegistrationError(msg.sender, name, 
+    //         "Incorrect amount of Ether. 0.002 ether for registration");
         
-        //---refund back to the sender---
-        // payable(msg.sender).transfer(msg.value);
+    //     //---refund back to the sender---
+    //     payable(msg.sender).transfer(msg.value);
         
-        //---exit the function---
-        // return;
+    //     //---exit the function---
+    //     return;
     // }
  
     recordProof(hashing(name));
